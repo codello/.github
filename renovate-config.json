@@ -14,7 +14,8 @@
     },
     {
       "matchCategories": ["ci"],
-      "addLabels": ["ci"]
+      "addLabels": ["ci"],
+      "semanticCommitType": "ci"
     },
     {
       "matchCategories": ["docker"],
