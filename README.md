@@ -8,7 +8,7 @@ See the Renovate [documentation](https://docs.renovatebot.com/config-presets/#ex
 
 ```json
 {
-  "extends": "github>codello/renovate-config"
+  "extends": "local>codello/.github:renovate-config"
 }
 ```
 
@@ -16,4 +16,4 @@ See the Renovate [documentation](https://docs.renovatebot.com/config-presets/#ex
 
 The contents of this repository provide defaults for other projects but are in many cases not explicitly referenced. This makes versioning contents basically impossible.
 
-In addition it can be highly dependent on a project, what constitutes a breaking change. In order to avoid confusion, this repository does not provide version numbers. If you use the renovate config in this repository, you should consider every change a potentially breaking change. Usually you are better off, maintaining your own fork of this repo.
+In addition, it can be highly dependent on a project, what constitutes a breaking change. In order to avoid confusion, this repository does not provide version numbers. If you use the renovate config in this repository, you should consider every change a potentially breaking change. Usually you are better off, maintaining your own fork of this repo.
