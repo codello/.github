@@ -1,0 +1,68 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    ":assignAndReview(codello)",
+    "regexManagers:githubActionsVersions"
+  ],
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "matchCategories": ["ansible"],
+      "addLabels": ["ansible"]
+    },
+    {
+      "matchCategories": ["ci"],
+      "addLabels": ["ci"]
+    },
+    {
+      "matchCategories": ["docker"],
+      "addLabels": ["docker"]
+    },
+    {
+      "matchCategories": ["golang"],
+      "addLabels": ["go"]
+    },
+    {
+      "matchCategories": ["java"],
+      "addLabels": ["java"]
+    },
+    {
+      "matchCategories": ["kubernetes"],
+      "addLabels": ["kubernetes"]
+    },
+    {
+      "matchCategories": ["node"],
+      "addLabels": ["nodejs"]
+    },
+    {
+      "matchCategories": ["perl"],
+      "addLabels": ["perl"]
+    },
+    {
+      "matchCategories": ["php"],
+      "addLabels": ["php"]
+    },
+    {
+      "matchCategories": ["python"],
+      "addLabels": ["python"]
+    },
+    {
+      "matchCategories": ["ruby"],
+      "addLabels": ["ruby"]
+    },
+    {
+      "matchCategories": ["rust"],
+      "addLabels": ["rust"]
+    },
+    {
+      "matchCategories": ["swift"],
+      "addLabels": ["swift"]
+    },
+    {
+      "matchCategories": ["terraform"],
+      "addLabels": ["terraform"]
+    }
+  ]
+}
