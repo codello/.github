@@ -14,18 +14,20 @@ jobs:
       - name: Get Tag Name
         id: tag
         run: |
-          echo "name=${GITHUB_REF_NAME%%.*}"
+          echo "name=${GITHUB_REF_NAME%%.*}" >> "$GITHUB_OUTPUT"
       - name: Move ${{ steps.tag.outputs.name }} Tag
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            github.rest.git.deleteRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: "refs/tags/${{ steps.tag.outputs.name }}"
-            })
-            github.rest.git.createRef({
+            try {
+              await github.rest.git.deleteRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: "refs/tags/${{ steps.tag.outputs.name }}"
+              })
+            } catch (e) {}
+            await github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: "refs/tags/${{ steps.tag.outputs.name }}",
