@@ -3,6 +3,9 @@ on:
   push:
     tags: ["v*.**"]
 
+permissions:
+  contents: write
+
 jobs:
   major-version:
     name: "Move Major Version"
