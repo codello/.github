@@ -3,7 +3,6 @@
   "extends": [
     "config:recommended",
     ":semanticCommits",
-    ":assignee(codello)",
     "regexManagers:githubActionsVersions"
   ],
   "labels": ["dependencies"],
