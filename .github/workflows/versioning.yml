@@ -17,12 +17,12 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            github.git.deleteRef({
+            github.rest.git.deleteRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: "refs/tags/${{ steps.tag.outputs.name }}"
             })
-            github.git.createRef({
+            github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: "refs/tags/${{ steps.tag.outputs.name }}",

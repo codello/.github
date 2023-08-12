@@ -14,6 +14,4 @@ See the Renovate [documentation](https://docs.renovatebot.com/config-presets/#ex
 
 ## Versioning
 
-The contents of this repository provide defaults for other projects but are in many cases not explicitly referenced. This makes versioning contents basically impossible.
-
-In addition, it can be highly dependent on a project, what constitutes a breaking change. In order to avoid confusion, this repository does not provide version numbers. If you use the renovate config in this repository, you should consider every change a potentially breaking change. Usually you are better off, maintaining your own fork of this repo.
+This repository is versioned via git tags that loosely follow [Semantic Versioning](https://semver.org/lang/de/). However, it can be highly dependent on a project, what constitutes a breaking change and what not. If you intend to use contents of this repository for your projects it is recommended that you pin the specific commit SHA instead of relying on versioned tags. If you rely on tags you may experience breaking changes, even in a patch release. Usually you are better off, maintaining your own fork of this repo.
