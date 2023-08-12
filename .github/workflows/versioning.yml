@@ -1,0 +1,30 @@
+name: "Versioning"
+on:
+  push:
+    tags: ["v*.**"]
+
+jobs:
+  major-version:
+    name: "Move Major Version"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Tag Name
+        id: tag
+        run: |
+          echo "name=${GITHUB_REF_NAME%%.*}"
+      - name: Move ${{ steps.tag.outputs.name }} Tag
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.git.deleteRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/${{ steps.tag.outputs.name }}"
+            })
+            github.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/${{ steps.tag.outputs.name }}",
+              sha: context.sha
+            })

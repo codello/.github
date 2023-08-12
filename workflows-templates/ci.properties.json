@@ -1,0 +1,13 @@
+{
+  "name": "Codello Go CI Workflow",
+  "description": "Standard workflow for Go applications.",
+  "iconName": "octicon beaker",
+  "categories": [
+    "continuous-integration",
+    "Go"
+  ],
+  "filePatterns": [
+    "^go.mod$",
+    "^Dockerfile$"
+  ]
+}
