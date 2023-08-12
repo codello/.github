@@ -24,7 +24,7 @@ jobs:
               await github.rest.git.deleteRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                ref: "refs/tags/${{ steps.tag.outputs.name }}"
+                ref: "tags/${{ steps.tag.outputs.name }}"
               })
             } catch (e) {}
             await github.rest.git.createRef({
