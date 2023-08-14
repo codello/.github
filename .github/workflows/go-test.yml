@@ -89,7 +89,7 @@ jobs:
         run: go mod download
       - name: Run Tests
         run: |
-          go test --tags="$TAGS" ${{ inputs.short && '-short' || '' }} "$PACKAGE"
+          go test --tags=$TAGS ${{ inputs.short && '-short' || '' }} $PACKAGE
         env:
           TAGS: ${{ inputs.tags }}
           PACKAGE: ${{ matrix.package }}
