@@ -17,6 +17,11 @@ on:
         type: string
         required: false
         default: "go.mod"
+      enable-cgo:
+        description: "Whether to use CGO or not."
+        type: boolean
+        required: false
+        default: false
       tags:
         description: "A list of build tags for the test binary."
         type: string
@@ -88,3 +93,4 @@ jobs:
         env:
           TAGS: ${{ inputs.tags }}
           PACKAGE: ${{ matrix.package }}
+          CGO_ENABLED: ${{ inputs.enable-cgo && '1' || '0' }}
