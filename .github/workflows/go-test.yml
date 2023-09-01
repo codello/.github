@@ -68,7 +68,7 @@ jobs:
           VERSIONS: ${{ inputs.go-versions }}
 
   test:
-    name: Run Tests${{ contains(inputs.packages, ',') && format(' on {0}', matrix.package) || '' }} (${{ matrix.test-on }}, ${{ !endsWith(matrix.go-version, 'go.mod') && 'Go ' || '' }}${{ matrix.go-version }})
+    name: ${{ contains(inputs.packages, ',') && format('{0}, ', matrix.package) || '' }}${{ matrix.test-on }}, ${{ !endsWith(matrix.go-version, 'go.mod') && 'Go ' || '' }}${{ matrix.go-version }}
     needs: [ prepare ]
     strategy:
       fail-fast: false
