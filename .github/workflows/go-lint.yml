@@ -29,6 +29,7 @@ jobs:
         with:
           # GolangCI-Lint manages the cache itself
           cache: ${{ hashFiles('.golangci.yml', '.golangci.yaml', '.golangci.toml', '.golangci.json') == '' }}
+          go-version-file: go.mod
       - name: Run GolangCI-Lint
         id: golangci
         if: ${{ hashFiles('.golangci.yml', '.golangci.yaml', '.golangci.toml', '.golangci.json') != '' }}
