@@ -7,6 +7,10 @@ on:
         type: string
         required: false
         default: "."
+      args:
+        description: "Custom arguments for golangci-lint"
+        type: string
+        required: false
       only-new-issues:
         description: "Show only new issues if it's a pull request."
         type: boolean
@@ -36,6 +40,7 @@ jobs:
         uses: golangci/golangci-lint-action@v3
         with:
           only-new-issues: ${{ inputs.only-new-issues }}
+          args: ${{ inputs.args }}
       - name: Run gofmt
         if: ${{ steps.golangci.conclusion == 'skipped' }}
         working-directory: ${{ inputs.dir }}
