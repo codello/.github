@@ -3,10 +3,10 @@ on:
   workflow_call:
     inputs:
       artifact-pattern:
-        description: "Pattern used to generate names for artifacts. {0} will be replaced by the build platform."
+        description: "Pattern used to generate names for artifacts. {0} will be replaced by the target OS, {1} will be replaced by the target architecture."
         type: string
         required: false
-        default: "build-{0}"
+        default: "build-{0}_{1}"
       packages:
         description: "A comma-separated list of packages to be built."
         type: string
@@ -86,7 +86,6 @@ jobs:
         run: |
           echo "os=${PLATFORM%%/*}" >> "$GITHUB_OUTPUT"
           echo "arch=${PLATFORM#*/}" >> "$GITHUB_OUTPUT"
-          echo "platform-slug=$os_$arch" >> "$GITHUB_OUTPUT"
           echo -n "package-name=" >> "$GITHUB_OUTPUT"
 
           pkg_id=$(echo "$PACKAGE" | cut -d " " -f1)
@@ -128,7 +127,7 @@ jobs:
         if: ${{ fromJSON(needs.prepare.outputs.artifact) }}
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ format(inputs.artifact-pattern, steps.vars.outputs.platform-slug) }}
+          name: ${{ format(inputs.artifact-pattern, steps.vars.outputs.os, steps.vars.outputs.arch) }}
           path: ${{ inputs.build-dir }}/*
           if-no-files-found: error
           retention-days: 1
