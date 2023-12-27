@@ -45,7 +45,8 @@ jobs:
           if [[ "${{ inputs.platforms }}" ]]; then
             echo "platforms=${{ inputs.platforms }}"
           else
-            echo "platforms=$(find "$DIR" -type d -depth 2 | sed "s%^$DIR/%%" | paste -sd ',')" >> "$GITHUB_OUTPUT"
+            echo -n "platforms=" >> "$GITHUB_OUTPUT"
+            find "$DIR" -type d -depth 2 | sed "s%^$DIR/%%" | paste -sd ',' - >> "$GITHUB_OUTPUT"
           fi
         env:
           DIR: ./${{ inputs.path }}
