@@ -123,11 +123,18 @@ jobs:
           GOOS: ${{ steps.vars.outputs.os }}
           GOARCH: ${{ steps.vars.outputs.arch }}
           CGO_ENABLED: ${{ inputs.enable-cgo && '1' || '0' }}
+      - name: Generate Artifact Name
+        id: artifact
+        if: ${{ fromJSON(needs.prepare.outputs.artifact) }}
+        run:
+          echo "platform=${PLATFORM////_}" >> "$GITHUB_OUTPUT"
+        env:
+          PLATFORM: ${{ matrix.platform }}
       - name: Upload Binary
         if: ${{ fromJSON(needs.prepare.outputs.artifact) }}
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ inputs.artifact-prefix }}-${{ matrix.platform }}
+          name: ${{ inputs.artifact-prefix }}-${{ steps.artifact.outputs.platform }}
           path: ${{ inputs.build-dir }}/*
           if-no-files-found: error
           retention-days: 1
