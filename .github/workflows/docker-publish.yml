@@ -9,7 +9,7 @@ on:
       artifact-pattern:
         description: "Glob pattern of the artifacts to be downloaded. All artifacts are merged."
         type: string
-        default: "build-*"
+        default: "${{ github.event.repository.name }}-*"
         required: false
       path:
         description: "Path where the artifacts will be downloaded."

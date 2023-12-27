@@ -6,7 +6,7 @@ on:
         description: "Pattern used to generate names for artifacts. {0} will be replaced by the target OS, {1} will be replaced by the target architecture."
         type: string
         required: false
-        default: "build-{0}_{1}"
+        default: "${{ github.event.repository.name }}-{0}_{1}"
       packages:
         description: "A comma-separated list of packages to be built."
         type: string
