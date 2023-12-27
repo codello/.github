@@ -3,17 +3,16 @@ on:
   workflow_call:
     inputs:
       platforms:
-        description: "A comma-separated list of platforms for which to build the image."
+        description: "A comma-separated list of platforms for which to build the image. By default the list of platforms is derived from the downloaded artifacts."
         type: string
         required: false
-        default: linux/amd64
-      artifact-prefix:
-        description: "Prefix of the artifacts to download."
+      artifact-pattern:
+        description: "Glob pattern of the artifacts to be downloaded. All artifacts are merged."
         type: string
-        default: "build"
+        default: "build-*"
         required: false
       path:
-        description: "Path where the artifact will be downloaded."
+        description: "Path where the artifacts will be downloaded."
         type: string
         required: false
         default: "build"
@@ -27,19 +26,29 @@ permissions:
   packages: write
 
 jobs:
-  docker:
+  publish:
     name: Publish Docker Image
     runs-on: ubuntu-latest
     steps:
       - name: Check out Code
         uses: actions/checkout@v4
       - name: Download Artifcat
-        if: ${{ inputs.artifact-prefix && inputs.artifact-prefix != 'false' }}
+        if: ${{ inputs.artifact-pattern && inputs.artifact-pattern != 'false' }}
         uses: actions/download-artifact@v4
         with:
           path: ${{ inputs.path }}
-          pattern: ${{ inputs.artifact-prefix }}-*
+          pattern: ${{ inputs.artifact-pattern }}
           merge-multiple: true
+      - name: Get Build Platforms
+        id: platforms
+        run: |
+          if [[ "${{ inputs.platforms }}" ]]; then
+            echo "platforms=${{ inputs.platforms }}"
+          else
+            echo "platforms=$(find "$DIR" -type d -depth 2 | sed "s%^$DIR/%%" | paste -sd ',')" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          DIR: ./${{ inputs.path }}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Login to GitHub Container Registry
@@ -68,7 +77,7 @@ jobs:
         with:
           context: .
           provenance: false
-          platforms: ${{ inputs.platforms }}
+          platforms: ${{ steps.platforms.outputs.platforms }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           outputs:
