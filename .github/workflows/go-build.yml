@@ -86,6 +86,7 @@ jobs:
         run: |
           echo "os=${PLATFORM%%/*}" >> "$GITHUB_OUTPUT"
           echo "arch=${PLATFORM#*/}" >> "$GITHUB_OUTPUT"
+          echo "platform-slug=$os_$arch" >> "$GITHUB_OUTPUT"
           echo -n "package-name=" >> "$GITHUB_OUTPUT"
 
           pkg_id=$(echo "$PACKAGE" | cut -d " " -f1)
@@ -123,18 +124,11 @@ jobs:
           GOOS: ${{ steps.vars.outputs.os }}
           GOARCH: ${{ steps.vars.outputs.arch }}
           CGO_ENABLED: ${{ inputs.enable-cgo && '1' || '0' }}
-      - name: Generate Artifact Name
-        id: artifact
-        if: ${{ fromJSON(needs.prepare.outputs.artifact) }}
-        run:
-          echo "platform=${PLATFORM////_}" >> "$GITHUB_OUTPUT"
-        env:
-          PLATFORM: ${{ matrix.platform }}
       - name: Upload Binary
         if: ${{ fromJSON(needs.prepare.outputs.artifact) }}
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ format(inputs.artifact-pattern, steps.artifact.outputs.platform }}
+          name: ${{ format(inputs.artifact-pattern, steps.vars.outputs.platform-slug) }}
           path: ${{ inputs.build-dir }}/*
           if-no-files-found: error
           retention-days: 1
