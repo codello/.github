@@ -2,6 +2,11 @@ name: Go Build
 on:
   workflow_call:
     inputs:
+      artifact:
+        description: "Enable or disable artifact generation."
+        type: boolean
+        required: false
+        default: true
       artifact-pattern:
         description: "Pattern used to generate names for artifacts. {0} will be replaced by the target OS, {1} will be replaced by the target architecture."
         type: string
@@ -53,7 +58,6 @@ jobs:
     outputs:
       platforms: ${{ steps.platforms.outputs.json }}
       packages: ${{ steps.packages.outputs.json }}
-      artifact: ${{ inputs.artifact-pattern && inputs.artifact-pattern != 'false' }}
     steps:
       - name: Prepare Platforms
         id: platforms
@@ -108,7 +112,7 @@ jobs:
         run: go mod download
       - name: Build ${{ steps.vars.outputs.package-name }}
         run: |
-          if [[ "${{ needs.prepare.outputs.artifact }}" == "true" ]]; then
+          if [[ "${{ inputs.artifact }}" == "true" ]]; then
             go build --tags="$TAGS" -ldflags "$LDFLAGS" -o "$BUILD_DIR/$PLATFORM/" -v $PACKAGE
           else
             go build --tags="$TAGS" -ldflags "$LDFLAGS" -v $PACKAGE
@@ -124,7 +128,7 @@ jobs:
           GOARCH: ${{ steps.vars.outputs.arch }}
           CGO_ENABLED: ${{ inputs.enable-cgo && '1' || '0' }}
       - name: Upload Binary
-        if: ${{ fromJSON(needs.prepare.outputs.artifact) }}
+        if: ${{ inputs.artifact }}
         uses: actions/upload-artifact@v4
         with:
           name: ${{ format(inputs.artifact-pattern, steps.vars.outputs.os, steps.vars.outputs.arch) }}

@@ -7,7 +7,7 @@ on:
         type: string
         required: false
       artifact-pattern:
-        description: "Glob pattern of the artifacts to be downloaded. All artifacts are merged."
+        description: "Glob pattern of the artifacts to be downloaded. All artifacts are merged. Pass an empty string to disable artifact downloading."
         type: string
         default: "${{ github.event.repository.name }}-*"
         required: false
