@@ -37,7 +37,7 @@ jobs:
       - name: Run GolangCI-Lint
         id: golangci
         if: ${{ hashFiles('.golangci.yml', '.golangci.yaml', '.golangci.toml', '.golangci.json') != '' }}
-        uses: golangci/golangci-lint-action@v3
+        uses: golangci/golangci-lint-action@v4
         with:
           only-new-issues: ${{ inputs.only-new-issues }}
           args: ${{ inputs.args }}
