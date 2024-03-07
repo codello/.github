@@ -104,7 +104,7 @@ jobs:
           PLATFORM: ${{ matrix.platform }}
           PACKAGE: ${{ matrix.package }}
       - name: Setup Go
-        uses: magnetikonline/action-golang-cache@v4
+        uses: magnetikonline/action-golang-cache@v5
         with:
           go-version-file: go.mod
           cache-key-suffix: ${{ matrix.platform }}
