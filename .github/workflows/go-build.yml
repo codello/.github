@@ -63,14 +63,14 @@ jobs:
         id: platforms
         run: |
           echo -n "json=" >> "$GITHUB_OUTPUT"
-          echo "$PLATFORMS" | jq --raw-input --compact-output 'split(",") | map(gsub("^\\s+|\\s+$";""))' >> "$GITHUB_OUTPUT"
+          echo "$PLATFORMS" | jq --raw-input --compact-output 'split(",") | map(gsub("^\\s+|\\s+$";"")) | map(select(length > 0))' >> "$GITHUB_OUTPUT"
         env:
           PLATFORMS: ${{ inputs.platforms }}
       - name: Prepare Packages
         id: packages
         run: |
           echo -n "json=" >> "$GITHUB_OUTPUT"
-          echo "$PACKAGES" | jq --raw-input --compact-output 'split(",") | map(gsub("^\\s+|\\s+$";""))' >> "$GITHUB_OUTPUT"
+          echo "$PACKAGES" | jq --raw-input --compact-output 'split(",") | map(gsub("^\\s+|\\s+$";"")) | map(select(length > 0))' >> "$GITHUB_OUTPUT"
         env:
           PACKAGES: ${{ inputs.packages }}
 

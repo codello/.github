@@ -49,21 +49,21 @@ jobs:
         id: packages
         run: |
           echo -n "json=" >> "$GITHUB_OUTPUT"
-          echo "$PACKAGES" | jq --raw-input --compact-output 'split(",") | map(gsub("^\\s+|\\s+$";""))' >> "$GITHUB_OUTPUT"
+          echo "$PACKAGES" | jq --raw-input --compact-output 'split(",") | map(gsub("^\\s+|\\s+$";"")) | map(select(length > 0))' >> "$GITHUB_OUTPUT"
         env:
           PACKAGES: ${{ inputs.packages }}
       - name: Prepare Test Platforms
         id: platforms
         run: |
           echo -n "json=" >> "$GITHUB_OUTPUT"
-          echo "$PLATFORMS" | jq --raw-input --compact-output 'split(",") | map(gsub("^\\s+|\\s+$";""))' >> "$GITHUB_OUTPUT"
+          echo "$PLATFORMS" | jq --raw-input --compact-output 'split(",") | map(gsub("^\\s+|\\s+$";"")) | map(select(length > 0))' >> "$GITHUB_OUTPUT"
         env:
           PLATFORMS: ${{ inputs.test-on }}
       - name: Prepare Go Versions
         id: versions
         run: |
           echo -n "json=" >> "$GITHUB_OUTPUT"
-          echo "$VERSIONS" | jq --raw-input --compact-output 'split(",") | map(gsub("^\\s+|\\s+$";""))' >> "$GITHUB_OUTPUT"
+          echo "$VERSIONS" | jq --raw-input --compact-output 'split(",") | map(gsub("^\\s+|\\s+$";"")) | map(select(length > 0))' >> "$GITHUB_OUTPUT"
         env:
           VERSIONS: ${{ inputs.go-versions }}
 
