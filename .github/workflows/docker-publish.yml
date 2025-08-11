@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Download Artifcats
         if: ${{ inputs.artifact-pattern && inputs.artifact-pattern != 'false' }}
         uses: actions/download-artifact@v5
