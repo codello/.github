@@ -43,7 +43,7 @@ jobs:
         id: platforms
         run: |
           if [[ "${{ inputs.platforms }}" ]]; then
-            echo "platforms=${{ inputs.platforms }}"
+            echo "platforms=${{ inputs.platforms }}" >> "$GITHUB_OUTPUT"
           else
             echo -n "platforms=" >> "$GITHUB_OUTPUT"
             find "$DIR" -mindepth 2 -maxdepth 2 -type d | sed "s%^$DIR/%%" | paste -sd ',' - >> "$GITHUB_OUTPUT"
