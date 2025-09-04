@@ -81,7 +81,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v5
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version: ${{ !endsWith(matrix.go-version, 'go.mod') && matrix.go-version || null }}
           go-version-file: ${{ endsWith(matrix.go-version, 'go.mod') && matrix.go-version || null }}
