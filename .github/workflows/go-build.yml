@@ -129,7 +129,7 @@ jobs:
           CGO_ENABLED: ${{ inputs.enable-cgo && '1' || '0' }}
       - name: Upload Binary
         if: ${{ inputs.artifact }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ format(inputs.artifact-pattern, steps.vars.outputs.os, steps.vars.outputs.arch) }}
           path: ${{ inputs.build-dir }}/*

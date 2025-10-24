@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@v5
       - name: Download Artifcats
         if: ${{ inputs.artifact-pattern && inputs.artifact-pattern != 'false' }}
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           path: ${{ inputs.path }}
           pattern: ${{ inputs.artifact-pattern }}
